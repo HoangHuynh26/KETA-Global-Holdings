@@ -1,0 +1,51 @@
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Environment Variables (strictly excluded as requested)
+.env
+.env.*
+*.env
+.env.example
+*.env.example
+**/.env
+**/.env.*
+**/.env.example
+
+# Project Data & Dynamic Storage (strictly excluded as requested)
+data/
+**/data/
+**/data/*
+*.sqlite
+*.sqlite3
+*.db
+
+# AI agent workspace internal folder
+.agents/
+
+# Browser saved pages
+*_files/
+dist/
+dist-ssr/
+build/
+**/dist/
+**/dist-ssr/
+**/build/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor & OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.local
+*.swp
+*.swo

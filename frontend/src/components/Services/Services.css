@@ -1,0 +1,658 @@
+.services-section {
+  position: relative;
+  background-color: var(--color-primary-navy);
+  padding: var(--space-24) 0;
+  z-index: 10;
+}
+
+.services-intro {
+  text-align: center;
+  max-width: 860px;
+  margin: 0 auto var(--space-20);
+}
+
+.services-main-title {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 3.8vw, 3.25rem);
+  font-weight: 700;
+  color: var(--color-porcelain-white);
+  margin-top: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+
+.services-subtitle {
+  font-family: var(--font-sans);
+  font-size: clamp(1rem, 1.4vw, 1.15rem);
+  color: var(--color-neutral-300);
+  line-height: 1.8;
+}
+
+/* Scrollytelling Chapters Container */
+.services-chapters-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-32);
+}
+
+/* Individual Chapter Block */
+.service-chapter {
+  position: relative;
+  scroll-margin-top: 100px;
+}
+
+.chapter-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--space-16);
+  align-items: center;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.chapter-content-col,
+.chapter-scorecard-col,
+.chapter-image-col {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+/* Sticky Chapters (Service 05 Scorecard & Service 06 Risk Matrix) */
+.service-chapter-sticky .chapter-inner,
+.service-chapter:has(.chapter-scorecard-col) .chapter-inner {
+  align-items: start;
+}
+
+.chapter-scorecard-col {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 96px;
+  align-self: start;
+  z-index: 20;
+}
+
+/* Alternating Layout for Standard Chapters */
+.service-chapter.layout-reverse .chapter-inner {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+}
+.service-chapter.layout-reverse .chapter-image-col {
+  order: 2;
+}
+.service-chapter.layout-reverse .chapter-content-col {
+  order: 1;
+}
+
+/* Chapter Meta & Headings */
+.chapter-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
+}
+
+.chapter-number {
+  font-family: var(--font-serif);
+  font-size: var(--font-size-2xl);
+  font-weight: 700;
+  color: var(--color-gold-metallic);
+  letter-spacing: 0.05em;
+  padding-bottom: 2px;
+  border-bottom: 2px solid var(--color-gold-metallic);
+}
+
+.chapter-total {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-xs);
+  color: var(--color-neutral-400);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.chapter-title {
+  font-family: var(--font-serif);
+  font-size: clamp(1.75rem, 2.5vw, 2.4rem);
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--color-porcelain-white);
+  margin-bottom: var(--space-3);
+}
+
+.chapter-positioning {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-gold-light);
+  margin-bottom: var(--space-6);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.chapter-positioning::before {
+  content: "";
+  display: inline-block;
+  width: 12px;
+  height: 2px;
+  background-color: var(--color-gold-metallic);
+}
+
+.chapter-description {
+  font-family: var(--font-sans);
+  font-size: clamp(0.95rem, 1.1vw, 1.05rem);
+  color: var(--color-neutral-300);
+  line-height: 1.8;
+  margin-bottom: var(--space-6);
+}
+
+/* Bullet Points */
+.chapter-bullets {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin-bottom: var(--space-8);
+}
+
+.bullet-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  font-family: var(--font-sans);
+  font-size: var(--font-size-sm);
+  color: var(--color-neutral-200);
+  line-height: 1.6;
+}
+
+.bullet-icon {
+  color: var(--color-gold-metallic);
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+
+/* Image Visual Frame */
+.chapter-image-frame {
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--color-navy-border);
+  box-shadow: var(--shadow-lg);
+  background: var(--color-navy-deep);
+  aspect-ratio: 16 / 10;
+}
+
+.chapter-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform var(--transition-luxury);
+}
+
+.chapter-image-frame:hover .chapter-img {
+  transform: scale(1.04);
+}
+
+/* Service 03 Video Frame - Disable hover effects completely */
+.chapter-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  pointer-events: none;
+  transform: none !important;
+}
+
+.chapter-video-frame,
+.chapter-video-frame:hover,
+.chapter-video-frame .chapter-video,
+.chapter-video-frame:hover .chapter-video {
+  transform: none !important;
+  transition: none !important;
+}
+
+.chapter-image-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    180deg,
+    rgba(10, 25, 47, 0.1) 0%,
+    rgba(10, 25, 47, 0.6) 100%
+  );
+  pointer-events: none;
+}
+
+.chapter-badge-overlay {
+  position: absolute;
+  bottom: var(--space-4);
+  right: var(--space-4);
+  background: rgba(10, 25, 47, 0.85);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--color-navy-border);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-pill);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--color-gold-light);
+  text-transform: uppercase;
+}
+
+/* Chapter 04: Compliance Groups Grid */
+.compliance-groups-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+  margin-top: var(--space-6);
+}
+
+.compliance-group-card {
+  background: var(--gradient-card);
+  border: 1px solid var(--color-navy-border-subtle);
+  border-left: 3px solid var(--color-gold-metallic);
+  border-radius: var(--radius-sm);
+  padding: var(--space-4) var(--space-5);
+  transition: all var(--transition-fast);
+}
+
+.compliance-group-card:hover {
+  border-color: var(--color-gold-metallic);
+  transform: translateX(4px);
+  background: linear-gradient(145deg, rgba(22, 50, 88, 0.8) 0%, rgba(10, 25, 47, 0.95) 100%);
+}
+
+.compliance-group-title {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  color: var(--color-porcelain-white);
+  margin-bottom: var(--space-1);
+}
+
+.compliance-group-certs {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-xs);
+  color: var(--color-gold-light);
+  line-height: 1.5;
+}
+
+/* KPI Cards Strip */
+.kpi-strip {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-3);
+  margin-bottom: var(--space-6);
+}
+
+.kpi-card {
+  background: rgba(0, 43, 91, 0.4);
+  border: 1px solid var(--color-navy-border);
+  border-radius: var(--radius-sm);
+  padding: var(--space-3);
+  text-align: center;
+}
+
+.kpi-value {
+  font-family: var(--font-serif);
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  color: var(--color-gold-metallic);
+}
+
+.kpi-label {
+  font-size: 0.7rem;
+  color: var(--color-neutral-400);
+  line-height: 1.3;
+  margin-top: 2px;
+}
+
+/* Workflow Steps Timeline (Service 05 & 06) */
+.workflow-steps-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  max-height: none;
+  overflow: visible;
+  padding-right: 0;
+  margin-bottom: var(--space-6);
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.step-card {
+  display: flex;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-5);
+  background: rgba(10, 25, 47, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-left: 3px solid transparent;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.step-card:hover,
+.step-card.active {
+  background: rgba(0, 43, 91, 0.65);
+  border-color: rgba(212, 175, 55, 0.4);
+  border-left-color: var(--color-gold-metallic);
+  transform: translateX(6px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.step-card-num {
+  font-family: var(--font-serif);
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  color: var(--color-gold-metallic);
+  flex-shrink: 0;
+  width: 28px;
+}
+
+.step-card-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.step-card-title {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-porcelain-white);
+  margin-bottom: 2px;
+  overflow-wrap: break-word;
+}
+
+.step-card-desc {
+  font-size: var(--font-size-xs);
+  color: var(--color-neutral-300);
+  line-height: 1.5;
+  overflow-wrap: break-word;
+}
+
+/* Tables / Scorecard / Matrix Wrappers */
+.audit-scorecard-wrapper,
+.risk-matrix-wrapper {
+  background: var(--gradient-card);
+  border: 1px solid var(--color-navy-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.scorecard-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--color-navy-border);
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.scorecard-header-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(212, 175, 55, 0.1);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.scorecard-header-title {
+  font-family: var(--font-serif);
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  color: var(--color-porcelain-white);
+  overflow-wrap: break-word;
+}
+
+.scorecard-header-subtitle {
+  font-size: var(--font-size-xs);
+  color: var(--color-neutral-400);
+  display: block;
+  overflow-wrap: break-word;
+}
+
+.scorecard-table-scroll {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  box-sizing: border-box;
+}
+
+.scorecard-table {
+  width: 100%;
+  min-width: 540px;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: var(--font-size-xs);
+}
+
+.scorecard-table th {
+  padding: var(--space-3) var(--space-4);
+  font-family: var(--font-sans);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-gold-light);
+  background: rgba(0, 43, 91, 0.5);
+  border-bottom: 1px solid var(--color-navy-border);
+}
+
+.scorecard-row {
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.scorecard-row:hover,
+.scorecard-row.active-row {
+  background: rgba(212, 175, 55, 0.16);
+}
+
+.scorecard-row.active-row .row-category {
+  color: var(--color-gold-light) !important;
+}
+
+.scorecard-row td {
+  padding: var(--space-3) var(--space-4);
+  vertical-align: middle;
+  color: var(--color-neutral-300);
+}
+
+.row-category {
+  color: var(--color-porcelain-white) !important;
+  font-weight: 600;
+}
+
+.weight-badge {
+  display: inline-block;
+  background: rgba(212, 175, 55, 0.15);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  color: var(--color-gold-light);
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+  margin-right: 6px;
+}
+
+.standard-text {
+  color: var(--color-neutral-200);
+}
+
+.row-risk {
+  color: var(--color-porcelain-white) !important;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.solution-box {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  color: var(--color-porcelain-white);
+  line-height: 1.4;
+}
+
+.scorecard-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--color-navy-border-subtle);
+  font-size: var(--font-size-xs);
+  color: var(--color-gold-light);
+}
+
+.scorecard-footer-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+/* Service 07: Marketplace Categories Grid */
+.marketplace-cats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-4);
+  margin-top: var(--space-6);
+}
+
+.market-cat-card {
+  background: var(--gradient-card);
+  border: 1px solid var(--color-navy-border-subtle);
+  border-radius: var(--radius-md);
+  padding: var(--space-5);
+  transition: all var(--transition-fast);
+}
+
+.market-cat-card:hover {
+  border-color: var(--color-gold-metallic);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+
+.market-cat-title {
+  font-family: var(--font-serif);
+  font-size: var(--font-size-base);
+  font-weight: 700;
+  color: var(--color-porcelain-white);
+  margin-bottom: var(--space-2);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.market-cat-items {
+  font-size: var(--font-size-xs);
+  color: var(--color-neutral-300);
+  line-height: 1.6;
+}
+
+/* Chapter Action CTA Buttons */
+.chapter-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  margin-top: var(--space-8);
+  flex-wrap: wrap;
+}
+
+.chapter-actions .gold-btn,
+.chapter-actions .outline-btn {
+  padding: 0.85rem 1.6rem;
+  font-size: 0.85rem;
+}
+
+/* Responsive Adaptations */
+@media (max-width: 1024px) {
+  .chapter-inner {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: var(--space-8);
+    width: 100%;
+    max-width: 100%;
+  }
+  .chapter-content-col,
+  .chapter-scorecard-col,
+  .chapter-image-col {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+  .chapter-scorecard-col {
+    position: static;
+    top: auto;
+  }
+  .service-chapter.layout-reverse .chapter-image-col {
+    order: 1;
+  }
+  .service-chapter.layout-reverse .chapter-content-col {
+    order: 2;
+  }
+  .services-chapters-list {
+    gap: var(--space-20);
+  }
+}
+
+@media (max-width: 640px) {
+  .chapter-inner {
+    gap: var(--space-6);
+  }
+  .audit-scorecard-wrapper,
+  .risk-matrix-wrapper {
+    padding: var(--space-4) var(--space-3);
+    border-radius: var(--radius-md);
+  }
+  .scorecard-header {
+    gap: var(--space-2);
+    padding-bottom: var(--space-3);
+  }
+  .scorecard-header-icon {
+    width: 34px;
+    height: 34px;
+  }
+  .scorecard-header-title {
+    font-size: var(--font-size-base);
+  }
+  .kpi-strip {
+    grid-template-columns: 1fr;
+    gap: var(--space-2);
+  }
+  .marketplace-cats-grid {
+    grid-template-columns: 1fr;
+  }
+  .scorecard-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2);
+  }
+}

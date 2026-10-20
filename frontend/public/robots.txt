@@ -1,0 +1,19 @@
+# ==============================================================================
+# robots.txt for KETA GLOBAL HOLDINGS
+# Website: https://ketaglobal.com
+# ==============================================================================
+
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /*?*preview=true
+
+# Allow search engine bots to crawl images and styles
+Allow: /assets/
+Allow: /assets/images/
+Allow: /assets/images/b2b-showcase/
+Allow: /assets/logo/
+
+# Sitemaps
+Sitemap: https://ketaglobal.com/sitemap.xml

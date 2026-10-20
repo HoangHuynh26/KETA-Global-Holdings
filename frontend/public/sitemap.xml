@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  
+  <!-- Homepage with Multilingual Alternates -->
+  <url>
+    <loc>https://ketaglobal.com/</loc>
+    <lastmod>2026-10-20</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://ketaglobal.com/?lang=vi"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ketaglobal.com/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://ketaglobal.com/?lang=zh"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ketaglobal.com/"/>
+
+    <!-- High-res Image Indexing for B2B Export Showcase -->
+    <image:image>
+      <image:loc>https://ketaglobal.com/assets/images/b2b-showcase/coffee-harvest.jpg</image:loc>
+      <image:title>Cà Phê Robusta and Arabica Chế Biến Sâu - Deep-Processed Specialty Coffee</image:title>
+      <image:caption>Misty Central Highlands coffee plantation harvest, FDA &amp; USDA Organic export quality</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://ketaglobal.com/assets/images/b2b-showcase/seafood-export.jpg</image:loc>
+      <image:title>Tôm Sú Sinh Thái and Thủy Sản Cấp Đông IQF - Premium Marine Seafood</image:title>
+      <image:caption>Ecological mangrove black tiger shrimp and flash-frozen seafood, BRCGS Grade A</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://ketaglobal.com/assets/images/b2b-showcase/golden-rice.jpg</image:loc>
+      <image:title>Gạo Thơm ST25 Hạt Ngọc Trời Hữu Cơ - World Champion ST25 Fragrant Rice</image:title>
+      <image:caption>Alluvial Mekong Delta shrimp-rice rotation harvest, GlobalGAP certified</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://ketaglobal.com/assets/images/b2b-showcase/vietnam-spices.jpg</image:loc>
+      <image:title>Hồ Tiêu Chư Sê, Hoa Hồi and Quế Trà Bồng - Natural Indochina Spices</image:title>
+      <image:caption>Steam sterilized black pepper, whole star anise, and high-potency cinnamon quills</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://ketaglobal.com/assets/images/b2b-showcase/tropical-fruits.jpg</image:loc>
+      <image:title>Trái Cây Sấy Thăng Hoa and Hạt Điều W240 - Freeze-Dried Exotic Fruits</image:title>
+      <image:caption>Sub-zero freeze-dried durian, mango, dragon fruit, and export roasted cashews</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://ketaglobal.com/assets/images/b2b-showcase/eco-handicraft.jpg</image:loc>
+      <image:title>Mây Tre Đan Nghệ Thuật and Nội Thất Gỗ FSC - Sustainable Handicrafts</image:title>
+      <image:caption>Artisanal bamboo lanterns, ceramics, and FSC plantation timber furniture</image:caption>
+    </image:image>
+  </url>
+
+  <!-- Deep Link: 8 Strategic Services Ecosystem -->
+  <url>
+    <loc>https://ketaglobal.com/#services</loc>
+    <lastmod>2026-10-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Deep Link: Why Choose Vietnam -->
+  <url>
+    <loc>https://ketaglobal.com/#why-vietnam</loc>
+    <lastmod>2026-10-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- Deep Link: B2B Showcase (3D Stacked Carousel) -->
+  <url>
+    <loc>https://ketaglobal.com/#b2b-showcase</loc>
+    <lastmod>2026-10-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+  </url>
+
+  <!-- Deep Link: CEO Leadership & Founder Vision -->
+  <url>
+    <loc>https://ketaglobal.com/#founder</loc>
+    <lastmod>2026-10-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Deep Link: Corporate Trade Inquiry & RFQ Form -->
+  <url>
+    <loc>https://ketaglobal.com/#contact</loc>
+    <lastmod>2026-10-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+</urlset>
