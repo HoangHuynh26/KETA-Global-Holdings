@@ -46,18 +46,29 @@ export async function createInquiry(req, res, next) {
       customerEmailStatus: 'PENDING'
     };
 
-    // 4. Send Transactional Emails via Resend
-    const emailResults = await sendInquiryEmails(inquiryRecord);
-    inquiryRecord.adminEmailStatus = emailResults.adminEmail.success ? 'SENT' : (emailResults.adminEmail.configured ? 'FAILED' : 'UNCONFIGURED');
-    inquiryRecord.customerEmailStatus = emailResults.customerEmail.success ? 'SENT' : (emailResults.customerEmail.configured ? 'FAILED' : 'UNCONFIGURED');
+    // 4. Send Transactional Emails & Append to Google Sheets in parallel
+    // Concurrency ensures lightning-fast execution well within Netlify's 10s timeout budget
+    const [emailResults, sheetResult] = await Promise.all([
+      sendInquiryEmails(inquiryRecord).catch(err => {
+        console.error('[Resend Error in controller]:', err.message);
+        return {
+          adminEmail: { success: false, configured: false, error: err.message },
+          customerEmail: { success: false, configured: false, error: err.message }
+        };
+      }),
+      appendInquiryToSheet(inquiryRecord).catch(err => {
+        console.error('[Sheet Error in controller]:', err.message);
+        return { success: false, configured: false, error: err.message };
+      })
+    ]);
 
-    // 5. Append Record to Google Sheets
-    const sheetResult = await appendInquiryToSheet(inquiryRecord);
+    inquiryRecord.adminEmailStatus = emailResults?.adminEmail?.success ? 'SENT' : (emailResults?.adminEmail?.configured ? 'FAILED' : 'UNCONFIGURED');
+    inquiryRecord.customerEmailStatus = emailResults?.customerEmail?.success ? 'SENT' : (emailResults?.customerEmail?.configured ? 'FAILED' : 'UNCONFIGURED');
 
     // Save to idempotency cache
     recentSubmissions.set(submissionFingerprint, { id: submissionId, time: Date.now() });
 
-    console.log(`[Inquiry Success] ID: ${submissionId} | Company: ${validatedData.companyName} | Sheet: ${sheetResult.success}${!sheetResult.success ? ` (${sheetResult.error || sheetResult.reason})` : ''} | Resend: ${emailResults.customerEmail.success}`);
+    console.log(`[Inquiry Success] ID: ${submissionId} | Company: ${validatedData.companyName} | Sheet: ${sheetResult?.success}${!sheetResult?.success ? ` (${sheetResult?.error || sheetResult?.reason})` : ''} | Resend: ${emailResults?.customerEmail?.success}`);
 
     return res.status(201).json({
       success: true,

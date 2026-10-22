@@ -57,6 +57,7 @@ app.use('/api', inquiryRoutes);
 app.use('/api/showcase', showcaseRoutes);
 // Direct fallback mounts if /api prefix is stripped by any proxy
 app.use('/showcase', showcaseRoutes);
+app.use('/', inquiryRoutes);
 
 // Error Handling
 app.use(notFoundHandler);

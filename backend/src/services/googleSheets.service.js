@@ -46,7 +46,7 @@ export async function appendInquiryToSheet(inquiry) {
       },
       body: JSON.stringify(payload),
       redirect: 'follow',
-      signal: AbortSignal.timeout(25000)
+      signal: AbortSignal.timeout(6000)
     });
 
     if (!response.ok) {
@@ -134,7 +134,7 @@ export async function updateEmailStatusesInSheet({ submissionId, adminEmailStatu
       },
       body: JSON.stringify(payload),
       redirect: 'follow',
-      signal: AbortSignal.timeout(20000)
+      signal: AbortSignal.timeout(4000)
     });
 
     const data = await response.json();
