@@ -4,9 +4,10 @@ import react from '@vitejs/plugin-react'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
+  // Local development dev server (not used on Netlify production)
   server: {
     host: true, 
-    allowedHosts: ['utah-hong-few-represented.trycloudflare.com'], 
+    allowedHosts: true, 
     proxy: {
       '/api': {
         target: 'http://localhost:5000',
@@ -15,6 +16,7 @@ export default defineConfig({
       }
     }
   },
+  // Local preview server
   preview: {
     host: true,
     allowedHosts: true,
@@ -25,5 +27,8 @@ export default defineConfig({
         secure: false
       }
     }
+  },
+  build: {
+    chunkSizeWarningLimit: 1000
   }
 })
