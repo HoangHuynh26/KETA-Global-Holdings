@@ -172,39 +172,42 @@ To dispatch transactional emails for every new business submission:
 
 ---
 
-## 6. Production Deployment Guide
+## 6. Production Deployment Guide (Netlify Unified Full-Stack)
 
-### Deploying Frontend to Vercel
-1. Push the code to GitHub/GitLab.
-2. In the [Vercel Dashboard](https://vercel.com/):
-   - Click **Add New** > **Project** and select repository.
-   - Set **Root Directory** to `frontend`.
-   - Build Command: `npm run build`
-   - Output Directory: `dist`
-   - Add Environment Variable:
-     - `VITE_API_BASE_URL`: `https://your-backend-service.onrender.com`
-3. Click **Deploy**.
+Both the **Frontend** (Vite React SPA) and **Backend** (Node.js/Express Serverless Functions) are configured to deploy together seamlessly on **Netlify** under a single domain.
 
-### Deploying Backend to Render / Railway / Node.js Host
-1. In the [Render Dashboard](https://render.com/):
-   - Click **New** > **Web Service**.
-   - Select your repository.
-   - Set **Root Directory** to `backend`.
-   - Runtime: `Node`
-   - Build Command: `npm install`
-   - Start Command: `npm start`
-2. Add the following **Environment Variables**:
-   - `PORT`: `5000`
+### 🌟 1-Click Unified Netlify Deployment
+
+1. **Push your repository** to GitHub/GitLab:
+   ```bash
+   git add .
+   git commit -m "Configure full-stack Netlify deployment"
+   git push origin main
+   ```
+
+2. **Connect to Netlify**:
+   - Go to [Netlify Dashboard](https://app.netlify.com/) -> **Add new site** -> **Import an existing project**.
+   - Select your GitHub repository (`KETA-Global-Holdings`).
+   - Netlify will automatically detect [netlify.toml](file:///c:/KETA%20Global%20Holdings/netlify.toml):
+     - **Base directory**: `.` (Root)
+     - **Build command**: `npm run build`
+     - **Publish directory**: `frontend/dist`
+     - **Functions directory**: `netlify/functions`
+
+3. **Configure Environment Variables** on Netlify:
+   In **Site configuration** > **Environment variables**, add:
    - `NODE_ENV`: `production`
-   - `FRONTEND_URL`: `https://your-frontend.vercel.app`
-   - `GOOGLE_SHEET_ID`: (your sheet ID)
-   - `GOOGLE_SHEET_TAB_NAME`: `BusinessInquiries`
-   - `GOOGLE_SERVICE_ACCOUNT_EMAIL`: (service account email)
-   - `GOOGLE_PRIVATE_KEY`: (private key with escaped `\n`)
-   - `RESEND_API_KEY`: (Resend API key)
-   - `RESEND_FROM_EMAIL`: `inquiries@ketaglobal.com`
-   - `ADMIN_NOTIFICATION_EMAIL`: `partnerships@ketaglobal.com`
-3. Deploy the service.
+   - `GOOGLE_SHEET_API_URL`: (Google Apps Script Web App URL)
+   - `GOOGLE_SHEET_API_SECRET`: (Apps Script Secret Key)
+   - `GOOGLE_SHEET_ID`: (Your Google Spreadsheet ID)
+   - `RESEND_API_KEY`: (Your Resend API key)
+   - `RESEND_FROM_EMAIL`: `inquiries@ketaglobal.com` (or your verified domain sender)
+   - `ADMIN_NOTIFICATION_EMAIL`: `admin@ketaglobal.com`
+
+4. **Click Deploy Site**:
+   - Frontend is served at `https://your-site.netlify.app`
+   - API is routed transparently at `https://your-site.netlify.app/api/*` (backed by Netlify Serverless Functions)
+   - **Zero CORS issues** because both frontend and API reside on the exact same origin!
 
 ---
 

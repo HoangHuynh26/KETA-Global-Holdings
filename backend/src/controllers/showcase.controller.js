@@ -5,44 +5,73 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Store showcase data file in backend/data/showcase.json
+// Store showcase data file in backend/data/showcase.json or /tmp in serverless environments
 const dataDir = path.resolve(__dirname, '../../data');
 const dataFilePath = path.join(dataDir, 'showcase.json');
+const tmpDataFilePath = path.join('/tmp', 'showcase.json');
 
 // Paths to save uploaded images (in frontend public and dist)
 const publicUploadDir = path.resolve(__dirname, '../../../frontend/public/assets/images/b2b-showcase');
 const distUploadDir = path.resolve(__dirname, '../../../frontend/dist/assets/images/b2b-showcase');
 
-// Ensure directories exist
-if (!fs.existsSync(dataDir)) {
-  fs.mkdirSync(dataDir, { recursive: true });
-}
-if (!fs.existsSync(publicUploadDir)) {
-  fs.mkdirSync(publicUploadDir, { recursive: true });
+// Ensure directories exist safely (avoid crash on read-only serverless filesystems)
+try {
+  if (!fs.existsSync(dataDir)) {
+    fs.mkdirSync(dataDir, { recursive: true });
+  }
+} catch (e) {
+  // Ignored in read-only environment
 }
 
-// Helper to read data file
+try {
+  if (!fs.existsSync(publicUploadDir)) {
+    fs.mkdirSync(publicUploadDir, { recursive: true });
+  }
+} catch (e) {
+  // Ignored in read-only environment
+}
+
+// Helper to read data file (with fallback to /tmp or bundled data)
 function readData() {
   try {
+    // Check /tmp first for any runtime updates in serverless
+    if (fs.existsSync(tmpDataFilePath)) {
+      const raw = fs.readFileSync(tmpDataFilePath, 'utf-8');
+      return JSON.parse(raw);
+    }
+    // Bundled fallback
     if (fs.existsSync(dataFilePath)) {
       const raw = fs.readFileSync(dataFilePath, 'utf-8');
       return JSON.parse(raw);
     }
   } catch (err) {
-    console.error('Error reading showcase.json:', err);
+    console.error('Error reading showcase data:', err);
   }
   return {};
 }
 
-// Helper to write data file
+// Helper to write data file (supports serverless /tmp fallback)
 function writeData(data) {
+  const content = JSON.stringify(data, null, 2);
+  let written = false;
+
+  // Try writing to primary data path
   try {
-    fs.writeFileSync(dataFilePath, JSON.stringify(data, null, 2), 'utf-8');
-    return true;
+    fs.writeFileSync(dataFilePath, content, 'utf-8');
+    written = true;
   } catch (err) {
-    console.error('Error writing showcase.json:', err);
-    return false;
+    // Serverless read-only filesystem, proceed to /tmp
   }
+
+  // Also write to /tmp for serverless runtime persistence
+  try {
+    fs.writeFileSync(tmpDataFilePath, content, 'utf-8');
+    written = true;
+  } catch (err) {
+    // Ignore
+  }
+
+  return written;
 }
 
 /**
@@ -150,15 +179,21 @@ export const uploadImage = async (req, res) => {
 
     // Save to public directory
     const publicPath = path.join(publicUploadDir, finalFileName);
-    fs.writeFileSync(publicPath, buffer);
+    let publicUrl = `/assets/images/b2b-showcase/${finalFileName}`;
 
-    // Save duplicate to dist directory if dist exists
-    if (fs.existsSync(distUploadDir)) {
-      const distPath = path.join(distUploadDir, finalFileName);
-      fs.writeFileSync(distPath, buffer);
+    try {
+      fs.writeFileSync(publicPath, buffer);
+
+      // Save duplicate to dist directory if dist exists
+      if (fs.existsSync(distUploadDir)) {
+        const distPath = path.join(distUploadDir, finalFileName);
+        fs.writeFileSync(distPath, buffer);
+      }
+    } catch (fsErr) {
+      // In serverless read-only filesystem, use data URL fallback
+      console.warn('Filesystem write not permitted in serverless, falling back to base64 URL:', fsErr.message);
+      publicUrl = base64Data;
     }
-
-    const publicUrl = `/assets/images/b2b-showcase/${finalFileName}`;
 
     return res.json({
       success: true,
