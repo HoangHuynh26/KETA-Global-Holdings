@@ -2,17 +2,27 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+// Safe resolution of directory for both ESM and CJS bundlers (avoids crash in Netlify Lambda)
+const currentDir = (() => {
+  try {
+    if (typeof __dirname !== 'undefined' && __dirname) return __dirname;
+    if (typeof import.meta !== 'undefined' && import.meta?.url) {
+      return path.dirname(fileURLToPath(import.meta.url));
+    }
+  } catch (err) {
+    // Ignore error
+  }
+  return process.cwd();
+})();
 
 // Store showcase data file in backend/data/showcase.json or /tmp in serverless environments
-const dataDir = path.resolve(__dirname, '../../data');
+const dataDir = path.resolve(currentDir, '../../data');
 const dataFilePath = path.join(dataDir, 'showcase.json');
 const tmpDataFilePath = path.join('/tmp', 'showcase.json');
 
 // Paths to save uploaded images (in frontend public and dist)
-const publicUploadDir = path.resolve(__dirname, '../../../frontend/public/assets/images/b2b-showcase');
-const distUploadDir = path.resolve(__dirname, '../../../frontend/dist/assets/images/b2b-showcase');
+const publicUploadDir = path.resolve(currentDir, '../../../frontend/public/assets/images/b2b-showcase');
+const distUploadDir = path.resolve(currentDir, '../../../frontend/dist/assets/images/b2b-showcase');
 
 // Ensure directories exist safely (avoid crash on read-only serverless filesystems)
 try {
