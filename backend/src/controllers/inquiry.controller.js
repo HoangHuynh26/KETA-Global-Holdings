@@ -2,6 +2,7 @@ import crypto from 'crypto';
 import { inquirySchema } from '../validators/inquiry.validator.js';
 import { appendInquiryToSheet } from '../services/googleSheets.service.js';
 import { sendInquiryEmails } from '../services/resend.service.js';
+import { config } from '../config/env.js';
 
 // Idempotency cache (stores submission hashes for 10 minutes to prevent double-click / network retry duplicates)
 const recentSubmissions = new Map();
@@ -91,6 +92,18 @@ export function healthCheck(req, res) {
   return res.status(200).json({
     status: 'healthy',
     timestamp: new Date().toISOString(),
-    service: 'KETA Global Holdings Enterprise API'
+    service: 'KETA Global Holdings Enterprise API',
+    integrations: {
+      googleSheets: {
+        configured: Boolean(config.googleSheetApiUrl),
+        hasSecret: Boolean(config.googleSheetApiSecret),
+        apiUrl: config.googleSheetApiUrl ? `${config.googleSheetApiUrl.substring(0, 45)}...` : 'NOT_CONFIGURED (Check Netlify environment variables)'
+      },
+      resend: {
+        configured: Boolean(config.resendApiKey),
+        fromEmail: config.resendFromEmail,
+        adminEmail: config.adminNotificationEmail
+      }
+    }
   });
 }

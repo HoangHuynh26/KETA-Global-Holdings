@@ -1,5 +1,14 @@
 import dotenv from 'dotenv';
+import path from 'path';
+
+// Load default .env from current directory
 dotenv.config();
+// Fallback: Also try loading from backend/.env if running from repository root
+try {
+  dotenv.config({ path: path.resolve(process.cwd(), 'backend/.env') });
+} catch (e) {
+  // Ignored in production/serverless
+}
 
 export const config = {
   port: process.env.PORT || 5000,
