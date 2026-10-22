@@ -23,6 +23,10 @@ data/
 # AI agent workspace internal folder
 .agents/
 
+# Netlify
+.netlify/
+**/.netlify/
+
 # Browser saved pages
 *_files/
 dist/

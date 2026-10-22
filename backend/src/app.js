@@ -8,6 +8,9 @@ import { errorHandler, notFoundHandler } from './middleware/errorHandler.js';
 
 const app = express();
 
+// Trust reverse proxy (Netlify, Cloudflare, etc.)
+app.set('trust proxy', 1);
+
 // Security HTTP headers
 app.use(helmet({
   crossOriginResourcePolicy: { policy: 'cross-origin' }
@@ -31,6 +34,14 @@ app.use((req, res, next) => {
   next();
 });
 
+// Normalize Netlify Serverless Function prefix if accessed directly or via rewrite
+app.use((req, res, next) => {
+  if (req.url.startsWith('/.netlify/functions/api')) {
+    req.url = req.url.replace('/.netlify/functions/api', '/api') || '/';
+  }
+  next();
+});
+
 // Root ping
 app.get('/', (req, res) => {
   res.json({
@@ -44,6 +55,8 @@ app.get('/', (req, res) => {
 // Mount Routes
 app.use('/api', inquiryRoutes);
 app.use('/api/showcase', showcaseRoutes);
+// Direct fallback mounts if /api prefix is stripped by any proxy
+app.use('/showcase', showcaseRoutes);
 
 // Error Handling
 app.use(notFoundHandler);
